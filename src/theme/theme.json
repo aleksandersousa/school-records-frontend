@@ -1,0 +1,90 @@
+{
+  "light": {
+    "colors": {
+      "primary": {
+        "primary": "#04354b",
+        "dark": "#2E3A59",
+        "active": "#086c99",
+        "hover": "#0a7eb2",
+        "light": "#9dcbe0",
+        "text": "#404040"
+      },
+      "secondary": {
+        "dark": "#0E3C51",
+        "active": "#0ea887",
+        "hover": "#12e0b4"
+      },
+      "neutral": {
+        "black": "#000000",
+        "darkest": "#1c1b1f",
+        "dark": "#3c3f40",
+        "dark2": "#5c6366",
+        "medium": "#938f99",
+        "medium2": "#95a1a6",
+        "medium3": "#828282",
+        "border": "#949494",
+        "soft": "#cdcdcd",
+        "light": "#e6e1e5",
+        "footer": "#ECECEC",
+        "lightBackground": "#F1F1F1",
+        "lightest": "#f7fdff",
+        "containerLightest": "#fcfcfc",
+        "lightNavBackground": "#F5F7FB",
+        "fillButton": "#f8f8f8",
+        "light1": "#FEFEFE",
+        "white": "#fff"
+      },
+      "surface": {
+        "neutral": "#6A6A6A",
+        "red": "#C6303E",
+        "danger": "#B34740",
+        "warning": "#876424",
+        "yellow": "#806812",
+        "success": "#267A37",
+        "secondary": "#097860",
+        "primary": "#4C6F7E",
+        "information": "#11729C"
+      },
+      "success": {
+        "dark": "#0d8230",
+        "medium": "#3ab452 ",
+        "light": "#9bf29b"
+      },
+      "headsUp": {
+        "dark": "#e28a06",
+        "medium": "#edaf40",
+        "light": "#fdf1cc"
+      },
+      "error": {
+        "dark": "#8c1519",
+        "medium": "#ba4943",
+        "light": "#f9dcce"
+      },
+      "gradient": {
+        "primary": "linear-gradient(270deg, #12e0b4 2.05%, #00b3a3 100%)"
+      }
+    },
+    "tipography": {
+      "fontSizes": {
+        "tiny": "0.75rem",
+        "label": "0.875rem",
+        "paragraph": "1rem",
+        "h6": "1.25rem",
+        "h5": "1.5rem",
+        "h4": "2rem",
+        "h3": "2.5rem",
+        "h2": "3rem",
+        "h1": "3.5rem"
+      },
+      "borderRadius": "0.5rem"
+    },
+    "breakpoints": {
+      "xs": "480px",
+      "sm": "768px",
+      "md": "1024px",
+      "lg": "1280px",
+      "xl": "1440px",
+      "max": "1920px"
+    }
+  }
+}
