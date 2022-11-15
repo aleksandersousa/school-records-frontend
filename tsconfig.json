@@ -22,7 +22,12 @@
     "types": [
       "react/next",
       "react-dom/next"
-    ]
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
     "src/**/*",

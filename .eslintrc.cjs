@@ -10,7 +10,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:react/recommended',
     'standard-with-typescript',
-    'prettier'
+    'prettier',
   ],
   overrides: [],
   parserOptions: {
@@ -40,6 +40,7 @@ module.exports = {
       }
     ],
     '@typescript-eslint/explicit-function-return-type': 'error',
+    '@typescript-eslint/no-misused-promises': 'off',
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
@@ -84,9 +85,10 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      'node': {
-        'extensions': ['.js','.jsx','.ts','.tsx']
-      }
+      'typescript': {},
+      // 'node': {
+      //   'extensions': ['.js','.jsx','.ts','.tsx']
+      // }
     }
   }
 }
