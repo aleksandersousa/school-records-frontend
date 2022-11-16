@@ -38,6 +38,12 @@ const AppRouter: React.FC = () => {
         <Route element={<ProtectedRoute />}>
           <Route path={routes.privates.home.path} element={<BaseLayout />}>
             <Route index element={<div>Home</div>} />
+            <Route
+              path={routes.privates.collegeSubjects.path}
+              element={<div>Disciplinas</div>}
+            />
+            <Route path={routes.privates.courses.path} element={<div>Cursos</div>} />
+            <Route path={routes.privates.results.path} element={<div>Resultados</div>} />
             <Route path={routes.privates.students.path} element={<div>Students</div>} />
           </Route>
         </Route>

@@ -32,6 +32,45 @@ export const Title = styled.h5`
   cursor: pointer;
 `;
 
+export const Actions = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  @media (max-width: 810px) {
+    margin-left: 2rem;
+  }
+
+  @media (max-width: ${({ theme }): string => theme.breakpoints.xs}) {
+    margin-left: unset;
+    display: none;
+  }
+`;
+
+export const ActionText = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: ${({ theme }): string => theme.colors.primary.default};
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }): string => theme.colors.primary.hover};
+  }
+
+  &.active {
+    color: ${({ theme }): string => theme.colors.primary.active};
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+  label {
+    cursor: pointer;
+  }
+`;
+
 export const UserProfile = styled.div`
   display: flex;
   align-items: center;

@@ -1,10 +1,11 @@
 export enum CurrentPage {
-  Dashboard = 0,
-  Production = 1,
-  Antecipa = 2,
+  Home = 0,
+  CollegeSubjects = 1,
+  Courses = 2,
+  Results = 3,
+  Students = 4,
 }
 
 export interface ProfileDropdownMenuProps {
   open: boolean;
-  hotMessage?: boolean;
 }
