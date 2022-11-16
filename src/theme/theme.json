@@ -24,6 +24,11 @@
         "dark": "#f75e3f",
         "medium": "#fa8e68",
         "light": "#fcbf91"
+      },
+      "success": {
+        "dark": "#71be5f",
+        "medium": "#93df7f",
+        "light": "#b5ff9e"
       }
     },
     "tipography": {

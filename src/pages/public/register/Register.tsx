@@ -1,5 +1,5 @@
 import { ButtonDefault, CardAuth, Textfield } from '@/components';
-import routes from '@/config/routes';
+import { routes } from '@/config';
 import { useFormik } from 'formik';
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';

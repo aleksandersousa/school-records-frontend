@@ -8,3 +8,6 @@ export { default as Textfield } from './inputs/textfield/Textfield';
 
 // buttons
 export { default as ButtonDefault } from './buttons/buttonDefault/ButtonDefault';
+
+// modals
+export { default as LogoutModal } from './modals/logout/LogoutModal';

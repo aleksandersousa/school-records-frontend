@@ -12,15 +12,22 @@ import {
   UserProfileText,
 } from './styles';
 import noAvatar from '@/assets/no_avatar.png';
+import { useOnClickOutside } from '@/hooks/useOnClickOutside';
+import { Link } from 'react-router-dom';
+import { routes } from '@/config';
+import { signout } from '@/services/userServices';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { showToast } from '@/utils/notifiers';
 
 const Navbar: React.FC = () => {
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const { currentUser } = useAppSelector(state => state.user);
 
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
 
   const dropdownRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  useOnClickOutside(dropdownRef, (): void => setShowProfileDropdown(false));
 
   const showDropdown = (): void => {
     setShowProfileDropdown(true);
@@ -28,24 +35,26 @@ const Navbar: React.FC = () => {
 
   const onLogout = async (): Promise<void> => {
     try {
-      // await logoutDoctorCall();
-      // dispatch(logoutDoctor());
+      await signout(dispatch);
+      showToast('Saiu com sucesso!', 'success');
     } catch (error) {
-      // showToast('Erro!', 'Erro ao sair.');
+      showToast('Erro ao sair', 'error');
       console.log(error);
     }
   };
 
   return (
     <Container>
-      <Title>SchoolRecords</Title>
+      <Link to={routes.privates.home.path}>
+        <Title>SchoolRecords</Title>
+      </Link>
 
       <UserProfile>
         <UserProfileText>
           <span>{currentUser?.name}</span>
         </UserProfileText>
         <UserProfileAvatar role="button" onClick={showDropdown}>
-          <Avatar src={currentUser !== null ? currentUser.avatar_url : noAvatar} />
+          <Avatar src={currentUser?.avatar_url ?? noAvatar} />
         </UserProfileAvatar>
       </UserProfile>
 

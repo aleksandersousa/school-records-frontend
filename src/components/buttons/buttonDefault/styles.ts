@@ -5,6 +5,7 @@ export const Container = styled.button`
 
   display: flex;
   justify-content: center;
+  gap: 0.5rem;
 
   transition: all 0.2s ease-in-out;
 

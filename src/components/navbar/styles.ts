@@ -1,11 +1,35 @@
 import styled from 'styled-components';
 import { ProfileDropdownMenuProps } from './typing';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.5rem 2rem;
+  background-color: ${({ theme }): string => theme.colors.secondary.light};
+
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1));
+  box-shadow: 0px 4px 30px rgba(220, 216, 216, 0.25);
+  -webkit-box-shadow: 0px 4px 30px rgba(220, 216, 216, 0.25);
+  z-index: 2;
+
+  @media (max-width: 810px) {
+    padding: 0 1rem;
+    height: 60px;
+    justify-content: unset;
+  }
+
+  @media (max-width: ${({ theme }): string => theme.breakpoints.xs}) {
+    justify-content: space-between;
+  }
+`;
 
 export const Title = styled.h5`
   font-weight: 700;
   color: ${({ theme }): string => theme.colors.primary.default};
+
+  cursor: pointer;
 `;
 
 export const UserProfile = styled.div`
@@ -68,7 +92,7 @@ export const ProfileDropdownMenu = styled.div<ProfileDropdownMenuProps>`
   transition: ease-in 400ms;
   position: absolute;
   right: 16px;
-  top: 70px;
+  top: 60px;
 
   box-shadow: 0px 4px 30px rgba(220, 216, 216, 0.25);
   -webkit-box-shadow: 0px 4px 30px rgba(220, 216, 216, 0.25);

@@ -1,8 +1,12 @@
 import { ButtonDefault, CardAuth, Textfield } from '@/components';
-import routes from '@/config/routes';
+import { routes } from '@/config';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { User } from '@/models';
+import { login } from '@/services/userServices';
+import { showToast } from '@/utils/notifiers';
 import { useFormik } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { initialValues, validationSchema } from './schema';
 import {
@@ -17,20 +21,31 @@ import {
 } from './styles';
 
 const Login: React.FC = () => {
-  const handleSubmit = (values: typeof initialValues): void => {
+  const dispatch = useAppDispatch();
+
+  const { isLoading, error } = useAppSelector(state => state.user);
+
+  const handleSubmit = async (values: typeof initialValues): Promise<void> => {
     const body: { user: User } = {
       user: {
         ...values,
       },
     };
-    console.log(body);
+
+    await login(body, dispatch);
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: values => handleSubmit(values),
+    onSubmit: async values => await handleSubmit(values),
   });
+
+  useEffect(() => {
+    if (error) {
+      showToast('Email ou senha incorretos', 'error');
+    }
+  }, [error]);
 
   return (
     <Container>
@@ -63,7 +78,7 @@ const Login: React.FC = () => {
             />
           </Body>
 
-          <ButtonDefault text="Entrar" type="submit" />
+          <ButtonDefault text="Entrar" type="submit" loading={isLoading} />
 
           <SignupText>
             Ainda não tem uma conta?{' '}
