@@ -3,6 +3,7 @@ import { routes } from '@/config';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { User } from '@/models';
+import { logout } from '@/redux/ducks/auth';
 import { login } from '@/services/userServices';
 import { showToast } from '@/utils/notifiers';
 import { useFormik } from 'formik';
@@ -43,6 +44,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (error) {
+      dispatch(logout());
       showToast('Email ou senha incorretos', 'error');
     }
   }, [error]);

@@ -4,3 +4,4 @@ export { default as Register } from './public/register/Register';
 
 // privates
 export { default as BaseLayout } from './private/DefaultLayout';
+export { default as Home } from './private/home/Home';

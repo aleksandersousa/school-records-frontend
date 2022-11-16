@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { routes } from '@/config';
-import { Login, Register, BaseLayout } from '@/pages';
+import { Login, Register, BaseLayout, Home } from '@/pages';
 import { LogoutModal } from '@/components';
 
 import ProtectedRoute from './ProtectedRoute';
@@ -37,7 +37,7 @@ const AppRouter: React.FC = () => {
         {/* privates */}
         <Route element={<ProtectedRoute />}>
           <Route path={routes.privates.home.path} element={<BaseLayout />}>
-            <Route index element={<div>Home</div>} />
+            <Route index element={<Home />} />
             <Route
               path={routes.privates.collegeSubjects.path}
               element={<div>Disciplinas</div>}

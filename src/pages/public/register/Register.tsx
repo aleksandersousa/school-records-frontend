@@ -1,7 +1,13 @@
 import { ButtonDefault, CardAuth, Textfield } from '@/components';
 import { routes } from '@/config';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { User } from '@/models';
+import { logout } from '@/redux/ducks/auth';
+import { register } from '@/services/userServices';
+import { showToast } from '@/utils/notifiers';
 import { useFormik } from 'formik';
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { initialValues, validationSchema } from './schema';
 import {
@@ -16,19 +22,31 @@ import {
 } from './styles';
 
 const Register: React.FC = () => {
-  const nameRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const emailRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const passwordRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector(state => state.user);
 
-  const handleSubmit = (values: typeof initialValues): void => {
-    console.log(values);
+  const handleSubmit = async (values: typeof initialValues): Promise<void> => {
+    const body: { user: User } = {
+      user: {
+        ...values,
+      },
+    };
+
+    await register(body, dispatch);
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: values => handleSubmit(values),
+    onSubmit: async values => await handleSubmit(values),
   });
+
+  useEffect(() => {
+    if (error) {
+      dispatch(logout());
+      showToast('Erro ao criar conta.', 'error');
+    }
+  }, [error]);
 
   return (
     <Container>
@@ -43,14 +61,18 @@ const Register: React.FC = () => {
             <Textfield
               label="Nome"
               placeholder="Digite seu nome"
-              ref={nameRef}
+              onChange={async (e): Promise<void> =>
+                await (formik.setFieldValue('name', e?.target.value) as Promise<void>)
+              }
               error={Boolean(formik.errors.name ?? '') && formik.touched.name}
               errorMessage={formik.errors.name}
             />
             <Textfield
               label="Email"
               placeholder="Digite seu email"
-              ref={emailRef}
+              onChange={async (e): Promise<void> =>
+                await (formik.setFieldValue('email', e?.target.value) as Promise<void>)
+              }
               error={Boolean(formik.errors.email ?? '') && formik.touched.email}
               errorMessage={formik.errors.email}
             />
@@ -58,13 +80,15 @@ const Register: React.FC = () => {
               label="Senha"
               placeholder="Digite sua senha"
               type="password"
-              ref={passwordRef}
+              onChange={async (e): Promise<void> =>
+                await (formik.setFieldValue('password', e?.target.value) as Promise<void>)
+              }
               error={Boolean(formik.errors.password ?? '') && formik.touched.password}
               errorMessage={formik.errors.password}
             />
           </Body>
 
-          <ButtonDefault text="Entrar" type="submit" />
+          <ButtonDefault text="Entrar" type="submit" loading={isLoading} />
 
           <SignupText>
             Já tem uma conta?{' '}
