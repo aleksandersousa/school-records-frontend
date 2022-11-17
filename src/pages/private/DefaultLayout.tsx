@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { LoagingCircle, Navbar } from '@/components';
+import { LoadingCircle, Navbar } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
 import { Outlet } from 'react-router-dom';
@@ -43,7 +43,7 @@ const DefaultLayout: React.FC = () => {
   }, []);
 
   if (isLoading()) {
-    <LoagingCircle />;
+    <LoadingCircle />;
   }
 
   return (

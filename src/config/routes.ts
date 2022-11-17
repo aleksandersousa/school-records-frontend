@@ -12,7 +12,12 @@ export default {
     courses: {
       path: '/cursos',
       routeFragment: 'cursos',
-      next: {},
+      next: {
+        students: {
+          path: '/cursos/:id/alunos',
+          routeFragment: ':id/alunos',
+        },
+      },
     },
     collegeSubjects: {
       path: '/disciplinas',

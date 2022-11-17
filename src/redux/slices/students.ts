@@ -5,27 +5,31 @@ import {
   createStudent,
   deleteStudent,
   getStudents,
+  getStudentsByCourse,
   updateStudent,
 } from '../thunks/students';
 
 interface State {
   data: Student[];
+  studentsByCourse: Student[];
   error: boolean;
   isLoading: boolean;
 }
 
 const INITIAL_STATE: State = {
   data: [],
+  studentsByCourse: [],
   error: false,
   isLoading: false,
 };
 
 const studentsSlice = createSlice({
-  name: 'user',
+  name: 'students',
   initialState: INITIAL_STATE,
   reducers: {
     studentsClear: state => {
       state.data = [];
+      state.studentsByCourse = [];
       state.isLoading = false;
       state.error = false;
     },
@@ -36,7 +40,8 @@ const studentsSlice = createSlice({
       state.isLoading = true;
       state.error = false;
     },
-    [getStudents.fulfilled.toString()]: (_, { payload }) => ({
+    [getStudents.fulfilled.toString()]: (state: State, { payload }) => ({
+      ...state,
       isLoading: false,
       error: false,
       data: payload,
@@ -45,6 +50,10 @@ const studentsSlice = createSlice({
       state.isLoading = false;
       state.error = true;
     },
+    [getStudentsByCourse.fulfilled.toString()]: (state: State, { payload }) => ({
+      ...state,
+      studentsByCourse: payload,
+    }),
 
     // create
     [createStudent.fulfilled.toString()]: (state: State, { payload }) => ({

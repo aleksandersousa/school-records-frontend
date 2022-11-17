@@ -24,6 +24,29 @@ export const getStudents = createAsyncThunk(
   }
 );
 
+export const getStudentsByCourse = createAsyncThunk(
+  'students/get_by_course',
+  async (
+    courseId: number,
+    { dispatch, rejectWithValue }
+  ): Promise<Student[] | unknown> => {
+    try {
+      const res = await authApi.get<Student[]>(`/courses/${courseId}/students`);
+      return res.data;
+    } catch (error: any) {
+      dispatch(studentsClear());
+      showToast('Erro ao pegar alunos.', 'error');
+
+      // return custom error message from API if any
+      if (error.response?.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
 export const createStudent = createAsyncThunk(
   'students/create',
   async (body: { student: Student }, { rejectWithValue }): Promise<Student | unknown> => {

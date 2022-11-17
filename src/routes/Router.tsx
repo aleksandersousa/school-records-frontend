@@ -11,6 +11,8 @@ import {
   Courses,
   Students,
   Results,
+  SchoolRecords,
+  StudentsByCourse,
 } from '@/pages';
 import { LogoutModal } from '@/components';
 
@@ -54,6 +56,14 @@ const AppRouter: React.FC = () => {
             <Route path={routes.privates.courses.path} element={<Courses />} />
             <Route path={routes.privates.results.path} element={<Results />} />
             <Route path={routes.privates.students.path} element={<Students />} />
+            <Route
+              path={routes.privates.students.path + '/:id/historico'}
+              element={<SchoolRecords />}
+            />
+            <Route
+              path={routes.privates.courses.path + '/:id/alunos'}
+              element={<StudentsByCourse />}
+            />
           </Route>
         </Route>
       </Routes>

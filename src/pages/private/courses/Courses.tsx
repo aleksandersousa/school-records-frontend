@@ -15,9 +15,12 @@ import { useTheme } from 'styled-components';
 import { Wrapper, Filters, IconsWrapper, Title } from '../styles';
 import { deleteCourse, getCourses } from '@/redux/thunks/courses';
 import { Tooltip } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '@/config';
 
 const Courses: React.FC = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const { data: courses, isLoading } = useAppSelector(state => state.courses);
@@ -28,6 +31,7 @@ const Courses: React.FC = () => {
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
+  const [canGoToStudents, setCanGoToStudents] = useState(false);
   const filteredRows = courses.filter(row => {
     return (
       row?.name?.toLowerCase().includes(searched.toLowerCase()) ??
@@ -59,6 +63,15 @@ const Courses: React.FC = () => {
       hideable: false,
       renderCell: () => (
         <IconsWrapper>
+          <Tooltip title="Relação de alunos por curso">
+            <Icon
+              icon="mdi:file-chart"
+              width={32}
+              height={32}
+              color={theme.colors.primary.hover}
+              onClick={goToSchoolStudents}
+            />
+          </Tooltip>
           <Tooltip title="Editar">
             <Icon
               icon="mdi:pencil-circle"
@@ -107,6 +120,10 @@ const Courses: React.FC = () => {
     setShowEdit(false);
   };
 
+  const goToSchoolStudents = (): void => {
+    setCanGoToStudents(true);
+  };
+
   useEffect(() => {
     dispatch(getCourses()).catch(err => console.log(err));
   }, []);
@@ -116,6 +133,13 @@ const Courses: React.FC = () => {
       void dispatch(deleteCourse(selectedRow?.id as number));
     }
   }, [canDelete]);
+  useEffect(() => {
+    if (canGoToStudents) {
+      navigate(
+        routes.privates.courses.path + `/${selectedRow?.id?.toString() as string}/alunos`
+      );
+    }
+  }, [canGoToStudents]);
 
   return (
     <Wrapper>

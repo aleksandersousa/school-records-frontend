@@ -15,9 +15,12 @@ import { useTheme } from 'styled-components';
 import { Wrapper, Filters, IconsWrapper, Title } from '../styles';
 import { Tooltip } from '@mui/material';
 import { deleteStudent, getStudents } from '@/redux/thunks/students';
+import { useNavigate } from 'react-router-dom';
+import { routes } from '@/config';
 
 const Students: React.FC = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const { data: students, isLoading } = useAppSelector(state => state.students);
@@ -28,6 +31,7 @@ const Students: React.FC = () => {
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
+  const [canGoToRecords, setCanGoToRecords] = useState(false);
   const filteredRows = students.filter(row => {
     return (
       row?.name?.toLowerCase().includes(searched.toLowerCase()) ??
@@ -85,16 +89,7 @@ const Students: React.FC = () => {
               width={32}
               height={32}
               color={theme.colors.primary.default}
-              onClick={handleShowEditModal}
-            />
-          </Tooltip>
-          <Tooltip title="Relação de alunos por curso">
-            <Icon
-              icon="mdi:file-chart"
-              width={32}
-              height={32}
-              color={theme.colors.primary.hover}
-              onClick={handleShowEditModal}
+              onClick={goToSchoolRecords}
             />
           </Tooltip>
           <Tooltip title="Editar">
@@ -145,6 +140,10 @@ const Students: React.FC = () => {
     setShowEdit(false);
   };
 
+  const goToSchoolRecords = (): void => {
+    setCanGoToRecords(true);
+  };
+
   useEffect(() => {
     void dispatch(getStudents());
   }, []);
@@ -154,6 +153,14 @@ const Students: React.FC = () => {
       void dispatch(deleteStudent(selectedRow?.id as number));
     }
   }, [canDelete]);
+  useEffect(() => {
+    if (canGoToRecords) {
+      navigate(
+        routes.privates.students.path +
+          `/${selectedRow?.id?.toString() as string}/historico`
+      );
+    }
+  }, [canGoToRecords]);
 
   return (
     <Wrapper>

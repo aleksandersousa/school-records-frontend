@@ -1,6 +1,7 @@
 export { default as Navbar } from './navbar/Navbar';
 export { default as DataTable } from './table/DataTable';
-export { default as LoagingCircle } from './loadingCircle/LoadingCircle';
+export { default as LoadingCircle } from './loadingCircle/LoadingCircle';
+export { default as List } from './list/List';
 
 // cards
 export { default as CardAuth } from './cards/cardAuth/CardAuth';

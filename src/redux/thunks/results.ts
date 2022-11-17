@@ -1,4 +1,4 @@
-import { Result, Student } from '@/models';
+import { Result } from '@/models';
 import { authApi } from '@/services/api';
 import { showToast } from '@/utils/notifiers';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -6,9 +6,32 @@ import { resultsClear } from '../slices/results';
 
 export const getResults = createAsyncThunk(
   'results/get',
-  async (_, { dispatch, rejectWithValue }): Promise<Student[] | unknown> => {
+  async (_, { dispatch, rejectWithValue }): Promise<Result[] | unknown> => {
     try {
-      const res = await authApi.get<Student[]>('/results');
+      const res = await authApi.get<Result[]>('/results');
+      return res.data;
+    } catch (error: any) {
+      dispatch(resultsClear());
+      showToast('Erro ao pegar resultados.', 'error');
+
+      // return custom error message from API if any
+      if (error.response?.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const getResultsByStudent = createAsyncThunk(
+  'results/get_by_student',
+  async (
+    resultId: number,
+    { dispatch, rejectWithValue }
+  ): Promise<Result[] | unknown> => {
+    try {
+      const res = await authApi.get<Result[]>(`/students/${resultId}/results`);
       return res.data;
     } catch (error: any) {
       dispatch(resultsClear());

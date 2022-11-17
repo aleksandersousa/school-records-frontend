@@ -9,3 +9,5 @@ export { default as CollegeSubjects } from './private/collegeSubjects/CollegeSub
 export { default as Courses } from './private/courses/Courses';
 export { default as Results } from './private/results/Results';
 export { default as Students } from './private/students/Students';
+export { default as SchoolRecords } from './private/students/schoolRecords/SchoolRecords';
+export { default as StudentsByCourse } from './private/courses/students/StudentsByCourse';
