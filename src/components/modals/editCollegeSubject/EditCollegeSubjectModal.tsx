@@ -1,12 +1,11 @@
 import { ButtonDefault, ButtonOutline, Textfield, Select } from '@/components';
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { CollegeSubject } from '@/models';
 import { updateCollegeSubject } from '@/redux/thunks/collegeSubjects';
 import { showToast } from '@/utils/notifiers';
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
 import Modal from '../Modal';
-import { fakeData } from './constants';
 import { initialValues, validationSchema } from './schema';
 import { Container, Footer, Wrapper } from './styles';
 import { EditCollegeSubjectModalProps } from './typing';
@@ -17,6 +16,8 @@ const EditCollegeSubjectModal: React.FC<EditCollegeSubjectModalProps> = ({
   onClose,
 }) => {
   const dispatch = useAppDispatch();
+
+  const { data: courses } = useAppSelector(state => state.courses);
 
   const handleSubmit = async (values: typeof initialValues): Promise<void> => {
     try {
@@ -61,7 +62,10 @@ const EditCollegeSubjectModal: React.FC<EditCollegeSubjectModalProps> = ({
           <Select
             label="Curso"
             value={formik.values.course_id}
-            options={fakeData.map(d => ({ value: d.id, label: d.name }))}
+            options={courses.map(d => ({
+              value: d.id as number,
+              label: d.name as string,
+            }))}
             onChange={async (e): Promise<unknown> =>
               await formik.setFieldValue('course_id', Number(e?.target.value))
             }

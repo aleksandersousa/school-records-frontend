@@ -1,6 +1,7 @@
 /* eslint-disable guard-for-in */
 import { createSlice } from '@reduxjs/toolkit';
 import { Course } from '../../models';
+import { createCourse, getCourses, updateCourse } from '../thunks/courses';
 
 interface State {
   data: Course[];
@@ -18,46 +19,40 @@ const coursesSlice = createSlice({
   name: 'user',
   initialState: INITIAL_STATE,
   reducers: {
-    getCoursesStart: state => {
-      state.isLoading = true;
-    },
-    setCourses: (state, action) => {
-      state.data = action.payload;
-      state.isLoading = false;
-    },
-    addCourse: (state, action) => {
-      state.data.push(action.payload);
-      state.isLoading = false;
-    },
-    udpateCourses: (state, action) => {
-      for (const c of state.data) {
-        if (c.id === action.payload.id) {
-          c.name = action.payload.name;
-          c.code = action.payload.code;
-
-          break;
-        }
-      }
-      state.isLoading = false;
-    },
-    coursesFailure: state => {
-      state.isLoading = false;
-      state.error = true;
-    },
     coursesClear: state => {
       state.data = [];
       state.isLoading = false;
       state.error = false;
     },
   },
+  extraReducers: {
+    // get
+    [getCourses.pending.toString()]: (state: State) => {
+      state.isLoading = true;
+      state.error = false;
+    },
+    [getCourses.fulfilled.toString()]: (_, { payload }) => ({
+      isLoading: false,
+      error: false,
+      data: payload,
+    }),
+    [getCourses.rejected.toString()]: (state: State) => {
+      state.isLoading = false;
+      state.error = true;
+    },
+
+    // create
+    [createCourse.fulfilled.toString()]: (state: State, { payload }) => ({
+      ...state,
+      data: [...state.data, payload],
+    }),
+    // create
+    [updateCourse.fulfilled.toString()]: (state: State, { payload }) => ({
+      ...state,
+      data: state.data.map(d => (d.id === payload.id ? { ...payload } : d)),
+    }),
+  },
 });
 
-export const {
-  getCoursesStart,
-  setCourses,
-  addCourse,
-  udpateCourses,
-  coursesFailure,
-  coursesClear,
-} = coursesSlice.actions;
+export const { coursesClear } = coursesSlice.actions;
 export default coursesSlice.reducer;

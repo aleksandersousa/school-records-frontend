@@ -23,28 +23,6 @@ const collegeSubjectsSlice = createSlice({
   name: 'user',
   initialState: INITIAL_STATE,
   reducers: {
-    addCollegeSubject: (state, action) => {
-      state.data.push(action.payload);
-      state.isLoading = false;
-    },
-    udpateCollegeSubjects: (state, action) => {
-      for (const c of state.data) {
-        if (c.id === action.payload.id) {
-          c.name = action.payload.name;
-          c.code = action.payload.code;
-          c.workload = action.payload.workload;
-          c.course = action.payload.course;
-          c.course_id = action.payload.course_id;
-
-          break;
-        }
-      }
-      state.isLoading = false;
-    },
-    collegeSubjectsFailure: state => {
-      state.isLoading = false;
-      state.error = true;
-    },
     collegeSubjectsClear: state => {
       state.data = [];
       state.isLoading = false;
@@ -80,10 +58,5 @@ const collegeSubjectsSlice = createSlice({
   },
 });
 
-export const {
-  addCollegeSubject,
-  udpateCollegeSubjects,
-  collegeSubjectsFailure,
-  collegeSubjectsClear,
-} = collegeSubjectsSlice.actions;
+export const { collegeSubjectsClear } = collegeSubjectsSlice.actions;
 export default collegeSubjectsSlice.reducer;
