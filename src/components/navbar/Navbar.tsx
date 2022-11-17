@@ -95,7 +95,7 @@ const Navbar: React.FC = () => {
           className={currentPage === CurrentPage.CollegeSubjects ? 'active' : ''}
           onClick={goToCollegeSubjects}
         >
-          <Icon icon="mdi:alert" />
+          <Icon icon="maki:college" />
           <label>Disciplinas</label>
         </ActionText>
         <ActionText
@@ -103,7 +103,7 @@ const Navbar: React.FC = () => {
           className={currentPage === CurrentPage.Courses ? 'active' : ''}
           onClick={goToCourses}
         >
-          <Icon icon="mdi:alert" />
+          <Icon icon="raphael:books" />
           <label>Cursos</label>
         </ActionText>
         <ActionText
@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
           className={currentPage === CurrentPage.Results ? 'active' : ''}
           onClick={goToResults}
         >
-          <Icon icon="mdi:alert" />
+          <Icon icon="carbon:result" />
           <label>Resultados</label>
         </ActionText>
         <ActionText
@@ -119,7 +119,7 @@ const Navbar: React.FC = () => {
           className={currentPage === CurrentPage.Students ? 'active' : ''}
           onClick={goToStudents}
         >
-          <Icon icon="mdi:alert" />
+          <Icon icon="mdi:account-student" />
           <label>Alunos</label>
         </ActionText>
       </Actions>
