@@ -126,7 +126,6 @@ const Courses: React.FC = () => {
       </Filters>
 
       <DataTable
-        isCheckbox
         rows={filteredRows}
         columns={columns}
         loading={isLoading}

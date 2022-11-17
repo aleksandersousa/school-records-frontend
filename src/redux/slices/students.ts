@@ -1,6 +1,6 @@
 /* eslint-disable guard-for-in */
 import { createSlice } from '@reduxjs/toolkit';
-import { Course } from '../../models';
+import { Student } from '../../models';
 import {
   createStudent,
   deleteStudent,
@@ -9,7 +9,7 @@ import {
 } from '../thunks/students';
 
 interface State {
-  data: Course[];
+  data: Student[];
   error: boolean;
   isLoading: boolean;
 }

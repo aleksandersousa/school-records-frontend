@@ -67,6 +67,7 @@ const NewStudentModal: React.FC<NewStudentModalProps> = ({ show, onClose }) => {
           <Textfield
             label="Cpf"
             placeholder="Digite o cpf do aluno"
+            value={formik.values.cpf}
             onChange={async (e): Promise<unknown> =>
               await formik.setFieldValue(
                 'cpf',

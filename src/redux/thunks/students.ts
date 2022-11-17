@@ -78,13 +78,13 @@ export const deleteStudent = createAsyncThunk(
   'students/delete',
   async (studentId: number, { rejectWithValue }): Promise<Student | unknown> => {
     try {
-      await authApi.delete(`/Students/${studentId}`);
+      await authApi.delete(`/students/${studentId}`);
 
-      showToast('Curso atualizado com sucesso!', 'success');
+      showToast('Aluno deletado com sucesso!', 'success');
 
       return studentId;
     } catch (error: any) {
-      showToast('Erro ao atualizar curso', 'error');
+      showToast('Erro ao deletar aluno', 'error');
 
       // return custom error message from API if any
       if (error.response?.data.message) {

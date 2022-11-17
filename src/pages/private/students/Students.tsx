@@ -1,72 +1,102 @@
+import React, { useEffect, useState } from 'react';
 import {
   ButtonDefault,
   DataTable,
-  EditCollegeSubjectModal,
-  NewCollegeSubjectModal,
+  EditStudentModal,
+  NewStudentModal,
   SearchBar,
 } from '@/components';
 import { DataTableRowText } from '@/components/table/styles';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { CollegeSubject } from '@/models';
-import { deleteCollegeSubject, getCollegeSubjects } from '@/redux/thunks/collegeSubjects';
+import { Student } from '@/models';
 import { Icon } from '@iconify/react';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { Wrapper, Filters, IconsWrapper, Title } from '../styles';
+import { Tooltip } from '@mui/material';
+import { deleteStudent, getStudents } from '@/redux/thunks/students';
 
-const CollegeSubjects: React.FC = () => {
+const Students: React.FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
-  const { data: collegeSubjects, isLoading } = useAppSelector(
-    state => state.collegeSubjects
-  );
+  const { data: students, isLoading } = useAppSelector(state => state.students);
 
-  const [selectedRow, setSelectedRow] = useState<CollegeSubject | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Student | null>(null);
 
   const [searched, setSearched] = useState('');
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
-  const filteredRows = collegeSubjects.filter(row => {
+  const filteredRows = students.filter(row => {
     return (
       row?.name?.toLowerCase().includes(searched.toLowerCase()) ??
-      row.code?.toLowerCase().includes(searched.toLowerCase())
+      row.cpf?.toLowerCase().includes(searched.toLowerCase()) ??
+      row.registration_number?.toLowerCase().includes(searched.toLowerCase()) ??
+      row.course?.name?.toLowerCase().includes(searched.toLowerCase())
     );
   });
 
   const columns: GridColDef[] = [
     {
-      field: 'code',
-      headerName: 'Código',
+      field: 'registration_number',
+      headerName: 'Matrícula',
       minWidth: 200,
-      flex: 1.1,
-      renderCell: params => <DataTableRowText>{params.row?.code}</DataTableRowText>,
+      flex: 1,
+      renderCell: params => (
+        <DataTableRowText>{params.row?.registration_number}</DataTableRowText>
+      ),
     },
     {
       field: 'name',
       headerName: 'Nome',
       minWidth: 200,
-      flex: 1.3,
+      flex: 1.2,
       renderCell: params => <DataTableRowText>{params.row?.name}</DataTableRowText>,
     },
     {
-      field: 'workload',
-      headerName: 'Carga horária',
-      minWidth: 110,
+      field: 'cpf',
+      headerName: 'Cpf',
+      minWidth: 200,
+      flex: 0.5,
+      renderCell: params => <DataTableRowText>{params.row?.cpf}</DataTableRowText>,
+    },
+    {
+      field: 'course',
+      headerName: 'Curso',
+      minWidth: 200,
       flex: 1,
-      renderCell: params => <DataTableRowText>{params.row?.workload}</DataTableRowText>,
+      renderCell: params => (
+        <DataTableRowText>{params.row?.course?.name}</DataTableRowText>
+      ),
     },
     {
       field: 'actions',
       headerName: 'Ações',
-      flex: 0.5,
+      flex: 0.7,
       sortable: false,
       filterable: false,
       hideable: false,
       renderCell: () => (
         <IconsWrapper>
+          <Tooltip title="Histórico escolar">
+            <Icon
+              icon="mdi:clipboard-text-clock-outline"
+              width={32}
+              height={32}
+              color={theme.colors.primary.default}
+              onClick={handleShowEditModal}
+            />
+          </Tooltip>
+          <Tooltip title="Relação de alunos por curso">
+            <Icon
+              icon="mdi:file-chart"
+              width={32}
+              height={32}
+              color={theme.colors.primary.hover}
+              onClick={handleShowEditModal}
+            />
+          </Tooltip>
           <Icon
             icon="mdi:pencil-circle"
             width={32}
@@ -112,18 +142,18 @@ const CollegeSubjects: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getCollegeSubjects()).catch(err => console.log(err));
+    void dispatch(getStudents());
   }, []);
 
   useEffect(() => {
     if (canDelete) {
-      void dispatch(deleteCollegeSubject(selectedRow?.id as number));
+      void dispatch(deleteStudent(selectedRow?.id as number));
     }
   }, [canDelete]);
 
   return (
     <Wrapper>
-      <Title>Configurações das disciplinas</Title>
+      <Title>Configurações dos cursos</Title>
 
       <Filters>
         <SearchBar
@@ -131,7 +161,7 @@ const CollegeSubjects: React.FC = () => {
           value={searched}
           onChange={(searchVal): void => onSearch(searchVal as string)}
         />
-        <ButtonDefault text="Nova disciplina" onClick={handleShowNewModal} />
+        <ButtonDefault text="Novo aluno" onClick={handleShowNewModal} />
       </Filters>
 
       <DataTable
@@ -141,14 +171,14 @@ const CollegeSubjects: React.FC = () => {
         onSelectRow={onSelectRow}
       />
 
-      <NewCollegeSubjectModal show={showNew} onClose={handleCloseNewModal} />
-      <EditCollegeSubjectModal
+      <NewStudentModal show={showNew} onClose={handleCloseNewModal} />
+      <EditStudentModal
         show={showEdit}
-        collegeSubject={selectedRow}
+        student={selectedRow}
         onClose={handleCloseEditModal}
       />
     </Wrapper>
   );
 };
 
-export default CollegeSubjects;
+export default Students;

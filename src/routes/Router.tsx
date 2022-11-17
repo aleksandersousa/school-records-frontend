@@ -2,7 +2,15 @@ import React, { useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { routes } from '@/config';
-import { Login, Register, BaseLayout, Home, CollegeSubjects, Courses } from '@/pages';
+import {
+  Login,
+  Register,
+  BaseLayout,
+  Home,
+  CollegeSubjects,
+  Courses,
+  Students,
+} from '@/pages';
 import { LogoutModal } from '@/components';
 
 import ProtectedRoute from './ProtectedRoute';
@@ -44,7 +52,7 @@ const AppRouter: React.FC = () => {
             />
             <Route path={routes.privates.courses.path} element={<Courses />} />
             <Route path={routes.privates.results.path} element={<div>Resultados</div>} />
-            <Route path={routes.privates.students.path} element={<div>Students</div>} />
+            <Route path={routes.privates.students.path} element={<Students />} />
           </Route>
         </Route>
       </Routes>

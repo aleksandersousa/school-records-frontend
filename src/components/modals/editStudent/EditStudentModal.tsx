@@ -51,8 +51,11 @@ const EditStudentModal: React.FC<EditStudentModalProps> = ({
   useEffect(() => {
     if (student) {
       formik.setFieldValue('name', student.name) as Promise<void>;
-      formik.setFieldValue('code', student.cpf) as Promise<void>;
-      formik.setFieldValue('course_id', student.course_id) as Promise<void>;
+      formik.setFieldValue(
+        'cpf',
+        formatCpf.addMask(student.cpf as string)
+      ) as Promise<void>;
+      formik.setFieldValue('course_id', student.course?.id) as Promise<void>;
     }
   }, [student]);
 

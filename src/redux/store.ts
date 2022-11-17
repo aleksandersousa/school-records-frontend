@@ -10,7 +10,12 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { authReducer, collegeSubjectsReducer, coursesReducer } from './slices';
+import {
+  authReducer,
+  collegeSubjectsReducer,
+  coursesReducer,
+  studentsReducer,
+} from './slices';
 
 const persistConfig = {
   key: 'root',
@@ -23,6 +28,7 @@ const rootReducer = combineReducers({
   user: authReducer,
   collegeSubjects: collegeSubjectsReducer,
   courses: coursesReducer,
+  students: studentsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
