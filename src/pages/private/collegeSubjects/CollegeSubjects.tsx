@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks';
 import { CollegeSubject } from '@/models';
 import { deleteCollegeSubject, getCollegeSubjects } from '@/redux/thunks/collegeSubjects';
 import { Icon } from '@iconify/react';
+import { Tooltip } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
@@ -67,20 +68,24 @@ const CollegeSubjects: React.FC = () => {
       hideable: false,
       renderCell: () => (
         <IconsWrapper>
-          <Icon
-            icon="mdi:pencil-circle"
-            width={32}
-            height={32}
-            color={theme.colors.headsUp.dark}
-            onClick={handleShowEditModal}
-          />
-          <Icon
-            icon="mdi:delete-circle"
-            width={32}
-            height={32}
-            color={theme.colors.error.dark}
-            onClick={onDelete}
-          />
+          <Tooltip title="Editar">
+            <Icon
+              icon="mdi:pencil-circle"
+              width={32}
+              height={32}
+              color={theme.colors.headsUp.dark}
+              onClick={handleShowEditModal}
+            />
+          </Tooltip>
+          <Tooltip title="Deletar">
+            <Icon
+              icon="mdi:delete-circle"
+              width={32}
+              height={32}
+              color={theme.colors.error.dark}
+              onClick={onDelete}
+            />
+          </Tooltip>
         </IconsWrapper>
       ),
     },

@@ -1,102 +1,111 @@
-import React, { useEffect, useState } from 'react';
 import {
   ButtonDefault,
   DataTable,
-  EditStudentModal,
-  NewStudentModal,
+  EditResultModal,
+  NewResultModal,
   SearchBar,
 } from '@/components';
-import { DataTableRowText } from '@/components/table/styles';
+import { DataTableRowStatus, DataTableRowText } from '@/components/table/styles';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { Student } from '@/models';
+import { Result } from '@/models';
+import { deleteResult, getResults } from '@/redux/thunks/results';
 import { Icon } from '@iconify/react';
-import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { useTheme } from 'styled-components';
-import { Wrapper, Filters, IconsWrapper, Title } from '../styles';
 import { Tooltip } from '@mui/material';
-import { deleteStudent, getStudents } from '@/redux/thunks/students';
+import { GridCellParams, GridColDef } from '@mui/x-data-grid';
+import { format } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import { useTheme } from 'styled-components';
+import { Filters, IconsWrapper, Title, Wrapper } from '../styles';
 
-const Students: React.FC = () => {
+const Results: React.FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
-  const { data: students, isLoading } = useAppSelector(state => state.students);
+  const { data: results, isLoading } = useAppSelector(state => state.results);
 
-  const [selectedRow, setSelectedRow] = useState<Student | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Result | null>(null);
 
   const [searched, setSearched] = useState('');
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
-  const filteredRows = students.filter(row => {
+  const filteredRows = results.filter(row => {
     return (
-      row?.name?.toLowerCase().includes(searched.toLowerCase()) ??
-      row.cpf?.toLowerCase().includes(searched.toLowerCase()) ??
-      row.registration_number?.toLowerCase().includes(searched.toLowerCase()) ??
-      row.course?.name?.toLowerCase().includes(searched.toLowerCase())
+      row?.assign_result_date
+        ?.toString()
+        .toLowerCase()
+        .includes(searched.toLowerCase()) ??
+      row.college_subject?.name?.toLowerCase().includes(searched.toLowerCase()) ??
+      row.student?.name?.toLowerCase().includes(searched.toLowerCase()) ??
+      row.type_of_result?.description?.toLowerCase().includes(searched.toLowerCase())
     );
   });
 
   const columns: GridColDef[] = [
     {
-      field: 'registration_number',
-      headerName: 'Matrícula',
+      field: 'student',
+      headerName: 'Aluno',
       minWidth: 200,
-      flex: 1,
+      flex: 1.1,
       renderCell: params => (
-        <DataTableRowText>{params.row?.registration_number}</DataTableRowText>
+        <DataTableRowText>{params.row?.student?.name}</DataTableRowText>
       ),
     },
     {
-      field: 'name',
-      headerName: 'Nome',
-      minWidth: 200,
-      flex: 1.2,
-      renderCell: params => <DataTableRowText>{params.row?.name}</DataTableRowText>,
-    },
-    {
-      field: 'cpf',
-      headerName: 'Cpf',
-      minWidth: 200,
-      flex: 0.5,
-      renderCell: params => <DataTableRowText>{params.row?.cpf}</DataTableRowText>,
-    },
-    {
-      field: 'course',
-      headerName: 'Curso',
+      field: 'result',
+      headerName: 'Resultado',
       minWidth: 200,
       flex: 1,
       renderCell: params => (
-        <DataTableRowText>{params.row?.course?.name}</DataTableRowText>
+        <DataTableRowStatus
+          bgColor={
+            params.row?.type_of_result?.title === 'approved'
+              ? theme.colors.success.medium
+              : params.row?.type_of_result?.title === 'failed_for_lack'
+              ? theme.colors.error.medium
+              : theme.colors.error.dark
+          }
+          color={theme.colors.primary.white}
+        >
+          {params.row?.type_of_result?.description}
+        </DataTableRowStatus>
+      ),
+    },
+    {
+      field: 'note',
+      headerName: 'Nota',
+      flex: 0.5,
+      renderCell: params => <DataTableRowText>{params.row?.note}</DataTableRowText>,
+    },
+    {
+      field: 'college_subject',
+      headerName: 'Disciplina',
+      minWidth: 200,
+      flex: 1.2,
+      renderCell: params => (
+        <DataTableRowText>{params.row?.college_subject?.name}</DataTableRowText>
+      ),
+    },
+    {
+      field: 'assign_result_date',
+      headerName: 'Data de lançamento',
+      minWidth: 200,
+      flex: 1,
+      renderCell: params => (
+        <DataTableRowText>
+          {format(new Date(params.row?.assign_result_date as Date), 'dd/MM/yyyy')}
+        </DataTableRowText>
       ),
     },
     {
       field: 'actions',
       headerName: 'Ações',
-      flex: 0.7,
+      flex: 0.5,
       sortable: false,
       filterable: false,
       hideable: false,
       renderCell: () => (
         <IconsWrapper>
-          <Tooltip title="Histórico escolar">
-            <Icon
-              icon="mdi:clipboard-text-clock-outline"
-              width={32}
-              height={32}
-              color={theme.colors.primary.default}
-              onClick={handleShowEditModal}
-            />
-          </Tooltip>
-          <Tooltip title="Relação de alunos por curso">
-            <Icon
-              icon="mdi:file-chart"
-              width={32}
-              height={32}
-              color={theme.colors.primary.hover}
-              onClick={handleShowEditModal}
-            />
-          </Tooltip>
           <Tooltip title="Editar">
             <Icon
               icon="mdi:pencil-circle"
@@ -146,18 +155,18 @@ const Students: React.FC = () => {
   };
 
   useEffect(() => {
-    void dispatch(getStudents());
+    void dispatch(getResults());
   }, []);
 
   useEffect(() => {
     if (canDelete) {
-      void dispatch(deleteStudent(selectedRow?.id as number));
+      void dispatch(deleteResult(selectedRow?.id as number));
     }
   }, [canDelete]);
 
   return (
     <Wrapper>
-      <Title>Configurações dos alunos</Title>
+      <Title>Configurações dos resultados</Title>
 
       <Filters>
         <SearchBar
@@ -165,7 +174,7 @@ const Students: React.FC = () => {
           value={searched}
           onChange={(searchVal): void => onSearch(searchVal as string)}
         />
-        <ButtonDefault text="Novo aluno" onClick={handleShowNewModal} />
+        <ButtonDefault text="Lançar resultado" onClick={handleShowNewModal} />
       </Filters>
 
       <DataTable
@@ -175,14 +184,14 @@ const Students: React.FC = () => {
         onSelectRow={onSelectRow}
       />
 
-      <NewStudentModal show={showNew} onClose={handleCloseNewModal} />
-      <EditStudentModal
+      <NewResultModal show={showNew} onClose={handleCloseNewModal} />
+      <EditResultModal
         show={showEdit}
-        student={selectedRow}
+        result={selectedRow}
         onClose={handleCloseEditModal}
       />
     </Wrapper>
   );
 };
 
-export default Students;
+export default Results;

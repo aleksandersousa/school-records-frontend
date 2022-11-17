@@ -14,6 +14,7 @@ import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { useTheme } from 'styled-components';
 import { Wrapper, Filters, IconsWrapper, Title } from '../styles';
 import { deleteCourse, getCourses } from '@/redux/thunks/courses';
+import { Tooltip } from '@mui/material';
 
 const Courses: React.FC = () => {
   const theme = useTheme();
@@ -58,20 +59,24 @@ const Courses: React.FC = () => {
       hideable: false,
       renderCell: () => (
         <IconsWrapper>
-          <Icon
-            icon="mdi:pencil-circle"
-            width={32}
-            height={32}
-            color={theme.colors.headsUp.dark}
-            onClick={handleShowEditModal}
-          />
-          <Icon
-            icon="mdi:delete-circle"
-            width={32}
-            height={32}
-            color={theme.colors.error.dark}
-            onClick={onDelete}
-          />
+          <Tooltip title="Editar">
+            <Icon
+              icon="mdi:pencil-circle"
+              width={32}
+              height={32}
+              color={theme.colors.headsUp.dark}
+              onClick={handleShowEditModal}
+            />
+          </Tooltip>
+          <Tooltip title="Deletar">
+            <Icon
+              icon="mdi:delete-circle"
+              width={32}
+              height={32}
+              color={theme.colors.error.dark}
+              onClick={onDelete}
+            />
+          </Tooltip>
         </IconsWrapper>
       ),
     },

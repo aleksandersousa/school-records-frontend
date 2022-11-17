@@ -14,7 +14,9 @@ import {
   authReducer,
   collegeSubjectsReducer,
   coursesReducer,
+  resultsReducer,
   studentsReducer,
+  typeOfResultsReducer,
 } from './slices';
 
 const persistConfig = {
@@ -29,6 +31,8 @@ const rootReducer = combineReducers({
   collegeSubjects: collegeSubjectsReducer,
   courses: coursesReducer,
   students: studentsReducer,
+  results: resultsReducer,
+  typeOfResults: typeOfResultsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ContainerProps } from './typing';
+import { ContainerProps, StatusProps } from './typing';
 
 export const Container = styled.div<ContainerProps>`
   height: ${({ height }): string => height || '70vh'};
@@ -11,4 +11,14 @@ export const DataTableRowText = styled.span`
   font-size: 0.875rem;
   color: ${({ theme }): string => theme.colors.text.medium};
   margin-bottom: 0.1rem;
+`;
+
+export const DataTableRowStatus = styled.div<StatusProps>`
+  padding: 0.5rem;
+  border-radius: 4px;
+  min-width: 83px;
+  text-align: center;
+  text-transform: capitalize;
+  background-color: ${({ bgColor }): string => bgColor};
+  color: ${({ color }): string => color};
 `;

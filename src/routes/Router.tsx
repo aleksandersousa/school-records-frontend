@@ -10,6 +10,7 @@ import {
   CollegeSubjects,
   Courses,
   Students,
+  Results,
 } from '@/pages';
 import { LogoutModal } from '@/components';
 
@@ -51,7 +52,7 @@ const AppRouter: React.FC = () => {
               element={<CollegeSubjects />}
             />
             <Route path={routes.privates.courses.path} element={<Courses />} />
-            <Route path={routes.privates.results.path} element={<div>Resultados</div>} />
+            <Route path={routes.privates.results.path} element={<Results />} />
             <Route path={routes.privates.students.path} element={<Students />} />
           </Route>
         </Route>

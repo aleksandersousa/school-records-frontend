@@ -35,3 +35,7 @@ export interface PageState {
   page: number;
   pageSize: number;
 }
+export interface StatusProps {
+  bgColor: string;
+  color: string;
+}
