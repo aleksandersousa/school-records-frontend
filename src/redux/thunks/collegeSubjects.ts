@@ -61,7 +61,32 @@ export const updateCollegeSubject = createAsyncThunk(
 
       return res.data;
     } catch (error: any) {
-      showToast('Erro ao atualizar disciplina', 'error');
+      showToast('Erro ao atualizar disciplina.', 'error');
+
+      // return custom error message from API if any
+      if (error.response?.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const deleteCollegeSubject = createAsyncThunk(
+  'collegeSubjects/delete',
+  async (
+    collegeSubjectId: number,
+    { rejectWithValue }
+  ): Promise<CollegeSubject | unknown> => {
+    try {
+      await authApi.delete(`/college_subjects/${collegeSubjectId}`);
+
+      showToast('Disciplina deletada com sucesso!', 'success');
+
+      return collegeSubjectId;
+    } catch (error: any) {
+      showToast('Erro ao deletar disciplina.', 'error');
 
       // return custom error message from API if any
       if (error.response?.data.message) {

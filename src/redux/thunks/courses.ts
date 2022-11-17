@@ -73,3 +73,25 @@ export const updateCourse = createAsyncThunk(
     }
   }
 );
+
+export const deleteCourse = createAsyncThunk(
+  'courses/delete',
+  async (courseId: number, { rejectWithValue }): Promise<Course | unknown> => {
+    try {
+      await authApi.delete(`/courses/${courseId}`);
+
+      showToast('Curso atualizado com sucesso!', 'success');
+
+      return courseId;
+    } catch (error: any) {
+      showToast('Erro ao atualizar curso', 'error');
+
+      // return custom error message from API if any
+      if (error.response?.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);

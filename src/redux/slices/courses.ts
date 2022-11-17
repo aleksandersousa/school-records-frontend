@@ -1,7 +1,7 @@
 /* eslint-disable guard-for-in */
 import { createSlice } from '@reduxjs/toolkit';
 import { Course } from '../../models';
-import { createCourse, getCourses, updateCourse } from '../thunks/courses';
+import { createCourse, deleteCourse, getCourses, updateCourse } from '../thunks/courses';
 
 interface State {
   data: Course[];
@@ -46,10 +46,17 @@ const coursesSlice = createSlice({
       ...state,
       data: [...state.data, payload],
     }),
-    // create
+
+    // update
     [updateCourse.fulfilled.toString()]: (state: State, { payload }) => ({
       ...state,
       data: state.data.map(d => (d.id === payload.id ? { ...payload } : d)),
+    }),
+
+    // delete
+    [deleteCourse.fulfilled.toString()]: (state: State, { payload }) => ({
+      ...state,
+      data: state.data.filter(d => d.id !== payload),
     }),
   },
 });

@@ -18,3 +18,5 @@ export { default as ButtonOutline } from './buttons/buttonOutline/ButtonOutline'
 export { default as LogoutModal } from './modals/logout/LogoutModal';
 export { default as NewCollegeSubjectModal } from './modals/newCollegeSubject/NewCollegeSubjectModal';
 export { default as EditCollegeSubjectModal } from './modals/editCollegeSubject/EditCollegeSubjectModal';
+export { default as NewCourseModal } from './modals/newCourse/NewCourseModal';
+export { default as EditCourseModal } from './modals/editCourse/EditCourseModal';

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { CollegeSubject } from '../../models';
 import {
   createCollegeSubject,
+  deleteCollegeSubject,
   getCollegeSubjects,
   updateCollegeSubject,
 } from '../thunks/collegeSubjects';
@@ -50,10 +51,17 @@ const collegeSubjectsSlice = createSlice({
       ...state,
       data: [...state.data, payload],
     }),
-    // create
+
+    // update
     [updateCollegeSubject.fulfilled.toString()]: (state: State, { payload }) => ({
       ...state,
       data: state.data.map(d => (d.id === payload.id ? { ...payload } : d)),
+    }),
+
+    // delete
+    [deleteCollegeSubject.fulfilled.toString()]: (state: State, { payload }) => ({
+      ...state,
+      data: state.data.filter(d => d.id !== payload),
     }),
   },
 });

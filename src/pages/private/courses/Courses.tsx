@@ -1,35 +1,33 @@
+import React, { useEffect, useState } from 'react';
 import {
   ButtonDefault,
   DataTable,
-  EditCollegeSubjectModal,
-  NewCollegeSubjectModal,
+  EditCourseModal,
+  NewCourseModal,
   SearchBar,
 } from '@/components';
 import { DataTableRowText } from '@/components/table/styles';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { CollegeSubject } from '@/models';
-import { deleteCollegeSubject, getCollegeSubjects } from '@/redux/thunks/collegeSubjects';
+import { Course } from '@/models';
 import { Icon } from '@iconify/react';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
 import { Wrapper, Filters, IconsWrapper, Title } from '../styles';
+import { deleteCourse, getCourses } from '@/redux/thunks/courses';
 
-const CollegeSubjects: React.FC = () => {
+const Courses: React.FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
-  const { data: collegeSubjects, isLoading } = useAppSelector(
-    state => state.collegeSubjects
-  );
+  const { data: courses, isLoading } = useAppSelector(state => state.courses);
 
-  const [selectedRow, setSelectedRow] = useState<CollegeSubject | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Course | null>(null);
 
   const [searched, setSearched] = useState('');
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
-  const filteredRows = collegeSubjects.filter(row => {
+  const filteredRows = courses.filter(row => {
     return (
       row?.name?.toLowerCase().includes(searched.toLowerCase()) ??
       row.code?.toLowerCase().includes(searched.toLowerCase())
@@ -50,13 +48,6 @@ const CollegeSubjects: React.FC = () => {
       minWidth: 200,
       flex: 1.3,
       renderCell: params => <DataTableRowText>{params.row?.name}</DataTableRowText>,
-    },
-    {
-      field: 'workload',
-      headerName: 'Carga horária',
-      minWidth: 110,
-      flex: 1,
-      renderCell: params => <DataTableRowText>{params.row?.workload}</DataTableRowText>,
     },
     {
       field: 'actions',
@@ -112,18 +103,18 @@ const CollegeSubjects: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(getCollegeSubjects()).catch(err => console.log(err));
+    dispatch(getCourses()).catch(err => console.log(err));
   }, []);
 
   useEffect(() => {
     if (canDelete) {
-      void dispatch(deleteCollegeSubject(selectedRow?.id as number));
+      void dispatch(deleteCourse(selectedRow?.id as number));
     }
   }, [canDelete]);
 
   return (
     <Wrapper>
-      <Title>Configurações das disciplinas</Title>
+      <Title>Configurações dos cursos</Title>
 
       <Filters>
         <SearchBar
@@ -131,7 +122,7 @@ const CollegeSubjects: React.FC = () => {
           value={searched}
           onChange={(searchVal): void => onSearch(searchVal as string)}
         />
-        <ButtonDefault text="Nova disciplina" onClick={handleShowNewModal} />
+        <ButtonDefault text="Novo curso" onClick={handleShowNewModal} />
       </Filters>
 
       <DataTable
@@ -142,14 +133,14 @@ const CollegeSubjects: React.FC = () => {
         onSelectRow={onSelectRow}
       />
 
-      <NewCollegeSubjectModal show={showNew} onClose={handleCloseNewModal} />
-      <EditCollegeSubjectModal
+      <NewCourseModal show={showNew} onClose={handleCloseNewModal} />
+      <EditCourseModal
         show={showEdit}
-        collegeSubject={selectedRow}
+        course={selectedRow}
         onClose={handleCloseEditModal}
       />
     </Wrapper>
   );
 };
 
-export default CollegeSubjects;
+export default Courses;
