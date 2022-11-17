@@ -15,6 +15,7 @@ const Textfield: React.FC<TextfieldProps> = ({
   error,
   disabled,
   value,
+  defaultValue,
   onChange,
 }) => {
   const theme = useTheme();
@@ -38,6 +39,7 @@ const Textfield: React.FC<TextfieldProps> = ({
           maxLength={maxLength}
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
           value={value}
+          defaultValue={defaultValue}
           onChange={onChange}
         />
         {type === 'password' &&

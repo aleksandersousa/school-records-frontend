@@ -35,7 +35,7 @@ export const Subtitle = styled.label`
   max-width: 80%;
 
   text-align: center;
-  color: ${({ theme }): string => theme.colors.terciary.dark};
+  color: ${({ theme }): string => theme.colors.text.dark};
 `;
 
 export const Body = styled.div`
@@ -46,13 +46,13 @@ export const Body = styled.div`
 
 export const SignupText = styled.label`
   text-align: center;
-  color: ${({ theme }): string => theme.colors.terciary.dark};
+  color: ${({ theme }): string => theme.colors.text.dark};
 `;
 
 export const TextLink = styled.label`
   font-weight: 700;
   text-decoration: underline;
-  color: ${({ theme }): string => theme.colors.terciary.dark};
+  color: ${({ theme }): string => theme.colors.text.dark};
 
   cursor: pointer;
 `;

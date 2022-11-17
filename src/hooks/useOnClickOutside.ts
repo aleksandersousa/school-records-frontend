@@ -1,12 +1,12 @@
 import { RefObject, useEffect } from 'react';
 
-export const useOnClickOutside = (
+const useOnClickOutside = (
   ref: RefObject<HTMLElement>,
   handler: (event?: unknown) => unknown
 ): void => {
   useEffect(
     () => {
-      const listener = (event): void => {
+      const listener = (event: any): void => {
         // Do nothing if clicking ref's element or descendent elements
         if (!ref.current || ref.current.contains(event.target)) {
           return;
@@ -32,3 +32,5 @@ export const useOnClickOutside = (
     [ref]
   );
 };
+
+export default useOnClickOutside;

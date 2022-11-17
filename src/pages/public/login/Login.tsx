@@ -1,13 +1,10 @@
 import { ButtonDefault, CardAuth, Textfield } from '@/components';
 import { routes } from '@/config';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { User } from '@/models';
-import { logout } from '@/redux/ducks/auth';
-import { login } from '@/services/userServices';
-import { showToast } from '@/utils/notifiers';
+import { login } from '@/redux/thunks/auth';
 import { useFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { initialValues, validationSchema } from './schema';
 import {
@@ -24,7 +21,7 @@ import {
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const { isLoading, error } = useAppSelector(state => state.user);
+  const { isLoading } = useAppSelector(state => state.user);
 
   const handleSubmit = async (values: typeof initialValues): Promise<void> => {
     const body: { user: User } = {
@@ -33,7 +30,7 @@ const Login: React.FC = () => {
       },
     };
 
-    await login(body, dispatch);
+    await dispatch(login(body));
   };
 
   const formik = useFormik({
@@ -41,13 +38,6 @@ const Login: React.FC = () => {
     validationSchema,
     onSubmit: async values => await handleSubmit(values),
   });
-
-  useEffect(() => {
-    if (error) {
-      dispatch(logout());
-      showToast('Email ou senha incorretos', 'error');
-    }
-  }, [error]);
 
   return (
     <Container>

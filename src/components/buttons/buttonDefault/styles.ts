@@ -5,13 +5,14 @@ export const Container = styled.button`
 
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 0.5rem;
 
   transition: all 0.2s ease-in-out;
 
   font-weight: 500;
   font-size: ${({ theme }): string => theme.tipography.fontSizes.paragraph};
-  color: ${({ theme }): string => theme.colors.secondary.light};
+  color: ${({ theme }): string => theme.colors.primary.white};
   background-color: ${({ theme }): string => theme.colors.primary.default};
 
   border-radius: ${({ theme }): string => theme.tipography.borderRadius};

@@ -9,15 +9,15 @@ export const Container = styled.div`
 
 export const Label = styled.label`
   font-weight: 500;
-  color: ${({ theme }): string => theme.colors.terciary.dark};
+  color: ${({ theme }): string => theme.colors.text.dark};
 `;
 
 export const Wrapper = styled.div<WrapperProps>`
   border: 1px solid
     ${({ theme, error }): string =>
-      !(error ?? false) ? theme.colors.terciary.medium : theme.colors.error.dark};
+      !(error ?? false) ? theme.colors.text.medium : theme.colors.error.dark};
   border-radius: ${({ theme }): string => theme.tipography.borderRadius};
-  background-color: ${({ theme }): string => theme.colors.secondary.light};
+  background-color: ${({ theme }): string => theme.colors.primary.white};
   width: 100%;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@ export const Wrapper = styled.div<WrapperProps>`
     cursor: pointer;
   }
   &.disabled {
-    background-color: ${({ theme }): string => theme.colors.secondary.light};
+    background-color: ${({ theme }): string => theme.colors.primary.white};
   }
   &:hover,
   &:focus-within {
@@ -42,16 +42,16 @@ export const Wrapper = styled.div<WrapperProps>`
 export const Input = styled.input`
   background-color: white;
   font-size: ${({ theme }): string => theme.tipography.fontSizes.label};
-  color: ${({ theme }): string => theme.colors.terciary.dark};
+  color: ${({ theme }): string => theme.colors.text.dark};
   border: none;
   padding: 0.81rem 0 0.75rem 0.625rem;
   width: 100%;
 
   &.disabled {
-    background-color: ${({ theme }): string => theme.colors.terciary.light};
-    color: ${({ theme }): string => theme.colors.terciary.light};
+    background-color: ${({ theme }): string => theme.colors.text.light};
+    color: ${({ theme }): string => theme.colors.text.light};
     &::placeholder {
-      color: ${({ theme }): string => theme.colors.terciary.light};
+      color: ${({ theme }): string => theme.colors.text.light};
     }
   }
 `;

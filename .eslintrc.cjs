@@ -41,6 +41,7 @@ module.exports = {
     ],
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',

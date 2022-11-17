@@ -2,33 +2,41 @@
   "light": {
     "colors": {
       "primary": {
-        "default": "#34344e",
-        "active": "#3a415a",
-        "hover": "#4f5773",
-        "medium": "#89a7b1",
-        "light": "#cbdad5"
+        "default": "#10304c",
+        "active": "#0596dd",
+        "hover": "#0c608f",
+        "light": "#08d7ff",
+        "white": "#fffffd"
       },
       "secondary": {
         "default": "#e5dc98",
         "active": "#ece5b1",
         "hover": "#f2eecb",
-        "medium": "#f9f6e4",
-        "light": "#fffffd"
+        "medium": "#f9f6e4"
       },
-      "terciary": {
-        "dark": "#414141",
+      "neutral": {
+        "medium": "#938f99",
+        "light": "#f8f8f8"
+      },
+      "headsUp": {
+        "dark": "#e28a06",
+        "medium": "#edaf40",
+        "light": "#fdf1cc"
+      },
+      "text": {
+        "dark": "#140e15",
         "medium": "#777777",
         "light": "#9f9f9f"
       },
       "error": {
-        "dark": "#f75e3f",
-        "medium": "#fa8e68",
-        "light": "#fcbf91"
+        "dark": "#8c1519",
+        "medium": "#ba4943",
+        "light": "#f9dcce"
       },
       "success": {
-        "dark": "#71be5f",
-        "medium": "#93df7f",
-        "light": "#b5ff9e"
+        "dark": "#0d8230",
+        "medium": "#3ab452",
+        "light": "#9bf29b"
       }
     },
     "tipography": {

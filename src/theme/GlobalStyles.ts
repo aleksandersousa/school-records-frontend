@@ -20,18 +20,18 @@ export const GlobalStyles = createGlobalStyle`
   /* style toastfy */
   .Toastify__toast-theme--light.Toastify__toast--success {
     background-color: ${({ theme }): string => theme.colors.success.dark};
-    color: ${({ theme }): string => theme.colors.secondary.light};
+    color: ${({ theme }): string => theme.colors.primary.white};
   }
   .Toastify__toast-theme--light.Toastify__toast--error {
     background-color: ${({ theme }): string => theme.colors.error.dark};
-    color: ${({ theme }): string => theme.colors.secondary.light};
+    color: ${({ theme }): string => theme.colors.primary.white};
   }
   .Toastify__progress-bar--error {
-    background-color: ${({ theme }): string => theme.colors.secondary.light};
+    background-color: ${({ theme }): string => theme.colors.primary.white};
   }
   .Toastify__toast-icon {
     svg {
-      fill: ${({ theme }): string => theme.colors.secondary.light};
+      fill: ${({ theme }): string => theme.colors.primary.white};
     }
   }
 

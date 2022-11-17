@@ -10,17 +10,19 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { authReducer } from './ducks';
+import { authReducer, collegeSubjectsReducer, coursesReducer } from './slices';
 
 const persistConfig = {
   key: 'root',
   version: 1,
-  blacklist: [],
+  blacklist: ['collegeSubjects', 'courses'],
   storage,
 };
 
 const rootReducer = combineReducers({
   user: authReducer,
+  collegeSubjects: collegeSubjectsReducer,
+  courses: coursesReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

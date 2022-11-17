@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Icon } from '@iconify/react';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppSelector, useOnClickOutside, useAppDispatch } from '@/hooks';
 import {
   Actions,
   ActionText,
@@ -14,13 +14,11 @@ import {
   UserProfileText,
 } from './styles';
 import noAvatar from '@/assets/no_avatar.png';
-import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 import { Link, useNavigate } from 'react-router-dom';
 import { routes } from '@/config';
-import { signout } from '@/services/userServices';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { showToast } from '@/utils/notifiers';
 import { CurrentPage } from './typing';
+import { logout } from '@/redux/thunks/auth';
+import { showToast } from '@/utils/notifiers';
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -40,11 +38,9 @@ const Navbar: React.FC = () => {
 
   const onLogout = async (): Promise<void> => {
     try {
-      await signout(dispatch);
-      showToast('Saiu com sucesso!', 'success');
+      await dispatch(logout());
     } catch (error) {
-      showToast('Erro ao sair', 'error');
-      console.log(error);
+      showToast('Erro inesperado.', 'error');
     }
   };
 

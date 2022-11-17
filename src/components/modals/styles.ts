@@ -32,7 +32,7 @@ export const Container = styled.div<ContainerProps>`
     `${padding.top} ${padding.left} ${padding.bottom} ${padding.right}`};
   background-color: white;
   border-radius: 8px;
-  border: 1px solid ${({ theme }): string => theme.colors.terciary.medium};
+  border: 1px solid ${({ theme }): string => theme.colors.text.medium};
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -72,5 +72,5 @@ export const Body = styled.div`
 
 export const Divider = styled.div`
   margin-top: 0.675rem;
-  border: 1px solid ${({ theme }): string => theme.colors.terciary.light};
+  border: 1px solid ${({ theme }): string => theme.colors.text.light};
 `;

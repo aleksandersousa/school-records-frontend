@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: space-between;
 
   padding: 0.5rem 2rem;
-  background-color: ${({ theme }): string => theme.colors.secondary.light};
+  background-color: ${({ theme }): string => theme.colors.primary.white};
 
   filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1));
   box-shadow: 0px 4px 30px rgba(220, 216, 216, 0.25);
@@ -89,14 +89,14 @@ export const UserProfileText = styled.div`
   span {
     font-weight: 700;
     text-transform: uppercase;
-    color: ${({ theme }): string => theme.colors.terciary.dark};
+    color: ${({ theme }): string => theme.colors.text.dark};
   }
 
   p {
     text-transform: uppercase;
     font-size: 0.625rem;
     font-weight: 400;
-    color: ${({ theme }): string => theme.colors.terciary.dark};
+    color: ${({ theme }): string => theme.colors.text.dark};
   }
 `;
 
@@ -120,7 +120,7 @@ export const ProfileDropdownMenu = styled.div<ProfileDropdownMenuProps>`
   flex-direction: column;
   gap: 1rem;
 
-  background-color: ${({ theme }): string => theme.colors.secondary.light};
+  background-color: ${({ theme }): string => theme.colors.primary.white};
   width: 40vw;
   max-width: 189px;
   max-height: 200px;

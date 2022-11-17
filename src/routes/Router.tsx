@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { routes } from '@/config';
-import { Login, Register, BaseLayout, Home } from '@/pages';
+import { Login, Register, BaseLayout, Home, CollegeSubjects } from '@/pages';
 import { LogoutModal } from '@/components';
 
 import ProtectedRoute from './ProtectedRoute';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 
 const AppRouter: React.FC = () => {
   const auth = useAuth();
@@ -40,7 +40,7 @@ const AppRouter: React.FC = () => {
             <Route index element={<Home />} />
             <Route
               path={routes.privates.collegeSubjects.path}
-              element={<div>Disciplinas</div>}
+              element={<CollegeSubjects />}
             />
             <Route path={routes.privates.courses.path} element={<div>Cursos</div>} />
             <Route path={routes.privates.results.path} element={<div>Resultados</div>} />

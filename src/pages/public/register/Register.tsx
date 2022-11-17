@@ -1,13 +1,10 @@
 import { ButtonDefault, CardAuth, Textfield } from '@/components';
 import { routes } from '@/config';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { User } from '@/models';
-import { logout } from '@/redux/ducks/auth';
-import { register } from '@/services/userServices';
-import { showToast } from '@/utils/notifiers';
+import { register } from '@/redux/thunks/auth';
 import { useFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { initialValues, validationSchema } from './schema';
 import {
@@ -23,7 +20,7 @@ import {
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector(state => state.user);
+  const { isLoading } = useAppSelector(state => state.user);
 
   const handleSubmit = async (values: typeof initialValues): Promise<void> => {
     const body: { user: User } = {
@@ -32,7 +29,7 @@ const Register: React.FC = () => {
       },
     };
 
-    await register(body, dispatch);
+    await dispatch(register(body));
   };
 
   const formik = useFormik({
@@ -40,13 +37,6 @@ const Register: React.FC = () => {
     validationSchema,
     onSubmit: async values => await handleSubmit(values),
   });
-
-  useEffect(() => {
-    if (error) {
-      dispatch(logout());
-      showToast('Erro ao criar conta.', 'error');
-    }
-  }, [error]);
 
   return (
     <Container>

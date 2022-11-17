@@ -1,18 +1,23 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import Modal from '../Modal';
 import { Buttons, Container, Wrapper } from './styles';
 import { LogoutModalProps } from './typing';
-import { logout } from '@/redux/ducks/auth';
 import ButtonDefault from '@/components/buttons/buttonDefault/ButtonDefault';
+import { logout } from '@/redux/thunks/auth';
+import { showToast } from '@/utils/notifiers';
+import { useAppDispatch } from '@/hooks';
 
 const LogoutModal: React.FC<LogoutModalProps> = ({ show, onClose }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const onClick = (): void => {
-    onClose();
-    dispatch(logout());
-    window.location.reload();
+  const onClick = async (): Promise<void> => {
+    try {
+      onClose();
+      await dispatch(logout());
+      window.location.reload();
+    } catch (error) {
+      showToast('Erro inesperado.', 'error');
+    }
   };
 
   return (

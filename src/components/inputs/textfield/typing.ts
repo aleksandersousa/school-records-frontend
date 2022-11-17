@@ -7,6 +7,7 @@ export interface TextfieldProps {
   placeholder?: string;
   width?: string;
   value?: string;
+  defaultValue?: string;
   type?: string;
   maxLength?: number;
   disabled?: boolean;
