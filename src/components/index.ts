@@ -20,3 +20,5 @@ export { default as NewCollegeSubjectModal } from './modals/newCollegeSubject/Ne
 export { default as EditCollegeSubjectModal } from './modals/editCollegeSubject/EditCollegeSubjectModal';
 export { default as NewCourseModal } from './modals/newCourse/NewCourseModal';
 export { default as EditCourseModal } from './modals/editCourse/EditCourseModal';
+export { default as NewStudentModal } from './modals/newStudent/NewStudentModal';
+export { default as EditStudentModal } from './modals/editStudent/EditStudentModal';
